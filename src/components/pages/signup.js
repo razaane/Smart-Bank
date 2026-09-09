@@ -1,5 +1,6 @@
 import { hashPassword } from "../../security/hash.js";
-import { fullNameRegex, emailRegex, phoneRegex, passwordRegex } from "../../utils/validators.js";
+import { fullNameRegex, emailRegex, passwordRegex } from "../../utils/validators.js";
+import { SaveUsers ,findByEmail } from "../../storage/userStorage.js";
 
 export function renderSignUp(root) {
   root.innerHTML = "";
@@ -52,10 +53,6 @@ export function renderSignUp(root) {
       return;
     }
 
-    if (!phoneRegex.test(actualPhone)) {
-      console.log("Téléphone invalide");
-      return;
-    }
 
     if (!passwordRegex.test(actualPassword)) {
       console.log("Mot de passe invalide");
@@ -67,9 +64,20 @@ export function renderSignUp(root) {
       return;
     }
 
+    if(findByEmail(actualEmail)){
+      console.log("Cette email deja utilisé");
+      return;
+    }
     const hashedPassword = await hashPassword(actualPassword);
     console.log("Toutes les données sont valides !");
     console.log("Password haché:", hashedPassword);
+
+    SaveUsers({
+      fullName :actualFullName,
+      email:actualEmail,
+      phone:actualPhone,
+      password:hashedPassword,
+    });
   });
 
   root.appendChild(title);
