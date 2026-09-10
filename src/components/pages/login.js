@@ -1,6 +1,7 @@
 import { hashPassword } from "../../security/hash.js";
 import { findByEmail } from "../../storage/userStorage.js";
 import { navigateTo } from "../../router/router.js";
+import { setCurrentUser } from "../../storage/sessionStorage.js";
 
 export function renderLogin(root) {
   root.innerHTML = "";
@@ -43,6 +44,7 @@ export function renderLogin(root) {
     }
 
     errorMsg.textContent = "";
+    setCurrentUser(user.id);
     console.log("Connexion réussie !", user);
     navigateTo("/dashboard");
   });

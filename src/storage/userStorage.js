@@ -21,3 +21,8 @@ export function findByEmail(email){
 
     return users.find((u)=>u.email === email);
 }
+
+export function findUserById(id){
+    const users =getUsers();
+    return users.find((u)=>u.id === id);
+}

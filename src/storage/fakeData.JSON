@@ -1,0 +1,71 @@
+{
+  "accounts": {
+    "USER_ID_1": {
+      "solde": 15420.50,
+      "comptes": [
+        { "type": "Compte Courant", "numero": "**** 4521", "solde": 12300.00 },
+        { "type": "Compte Épargne", "numero": "**** 7789", "solde": 3120.50 }
+      ]
+    },
+    "USER_ID_2": {
+      "solde": 8250.00,
+      "comptes": [
+        { "type": "Compte Courant", "numero": "**** 1123", "solde": 5250.00 },
+        { "type": "Compte Épargne", "numero": "**** 9932", "solde": 3000.00 }
+      ]
+    },
+    "USER_ID_3": {
+      "solde": 42890.75,
+      "comptes": [
+        { "type": "Compte Courant", "numero": "**** 6674", "solde": 20890.75 },
+        { "type": "Compte Épargne", "numero": "**** 3345", "solde": 15000.00 },
+        { "type": "Compte Devises", "numero": "**** 8801", "solde": 7000.00 }
+      ]
+    },
+    "USER_ID_4": {
+      "solde": 1200.00,
+      "comptes": [
+        { "type": "Compte Courant", "numero": "**** 2210", "solde": 1200.00 }
+      ]
+    },
+    "USER_ID_5": {
+      "solde": 63500.20,
+      "comptes": [
+        { "type": "Compte Courant", "numero": "**** 5567", "solde": 18500.20 },
+        { "type": "Compte Épargne", "numero": "**** 4478", "solde": 30000.00 },
+        { "type": "Compte Devises", "numero": "**** 1290", "solde": 15000.00 }
+      ]
+    }
+  },
+
+  "offres": [
+    { "id": 1, "titre": "Carte Gold Premium", "description": "Sans frais annuels la 1ère année", "categorie": "carte" },
+    { "id": 2, "titre": "Épargne+ 4%", "description": "Taux préférentiel sur votre épargne", "categorie": "épargne" },
+    { "id": 3, "titre": "Assurance Voyage Incluse", "description": "Couverture mondiale avec la carte Platinum", "categorie": "assurance" },
+    { "id": 4, "titre": "Crédit Auto 3.9%", "description": "Financement véhicule neuf ou occasion", "categorie": "credit" },
+    { "id": 5, "titre": "Compte Jeune 18-25", "description": "Zéro frais de tenue de compte", "categorie": "compte" },
+    { "id": 6, "titre": "Cashback Illimité", "description": "5% de cashback sur tous vos achats en ligne", "categorie": "carte" }
+  ],
+
+  "creditRates": {
+    "tauxAnnuel": 6.5,
+    "dureeMinMois": 6,
+    "dureeMaxMois": 84,
+    "montantMin": 5000,
+    "montantMax": 500000
+  },
+
+  "rewards": [
+    { "id": 1, "label": "50 DH cashback", "probabilite": 0.15 },
+    { "id": 2, "label": "Réduction 10% prochaine offre", "probabilite": 0.25 },
+    { "id": 3, "label": "100 DH cashback", "probabilite": 0.05 },
+    { "id": 4, "label": "Réduction 5% prochaine offre", "probabilite": 0.30 },
+    { "id": 5, "label": "Rien, réessayez demain", "probabilite": 0.25 }
+  ],
+
+  "flashOffers": [
+    { "id": 1, "titre": "Cashback x2 aujourd'hui", "description": "Doublez votre cashback sur tous les achats", "expireAt": "2026-09-15T23:59:59" },
+    { "id": 2, "titre": "0% de frais de change 48h", "description": "Profitez de vos achats à l'étranger sans frais", "expireAt": "2026-09-12T23:59:59" },
+    { "id": 3, "titre": "Prime de bienvenue x3", "description": "Triple prime pour toute ouverture de compte épargne", "expireAt": "2026-09-20T23:59:59" }
+  ]
+}

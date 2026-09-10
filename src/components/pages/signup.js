@@ -69,6 +69,7 @@ export function renderSignUp(root) {
     console.log("Password haché:", hashedPassword);
 
     SaveUsers({
+      id: crypto.randomUUID(),
       fullName :actualFullName,
       email:actualEmail,
       passwordHash: hashedPassword,
