@@ -16,7 +16,7 @@ export function SaveUsers(user){
     localStorage.setItem(storedUsers,JSON.stringify(users));
 }
 
-export function findByEmail(){
+export function findByEmail(email){
     const users = getUsers();
 
     return users.find((u)=>u.email === email);

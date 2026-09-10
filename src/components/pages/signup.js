@@ -1,6 +1,7 @@
 import { hashPassword } from "../../security/hash.js";
 import { fullNameRegex, emailRegex, passwordRegex } from "../../utils/validators.js";
 import { SaveUsers ,findByEmail } from "../../storage/userStorage.js";
+import { navigateTo } from "../../router/router.js";
 
 export function renderSignUp(root) {
   root.innerHTML = "";
@@ -18,10 +19,6 @@ export function renderSignUp(root) {
   email.placeholder = "Entrer votre adresse email";
   email.id = "email";
 
-  const phone = document.createElement("input");
-  phone.type = "tel";
-  phone.placeholder = "+212 6********";
-  phone.id = "phone";
 
   const password = document.createElement("input");
   password.type = "password";
@@ -38,8 +35,7 @@ export function renderSignUp(root) {
 
   submitBtn.addEventListener("click", async () => {
     const actualFullName = fullName.value;
-    const actualEmail = email.value;
-    const actualPhone = phone.value;
+    const actualEmail = email.value.trim();
     const actualPassword = password.value;
     const actualPassVer = passwordVer.value;
 
@@ -75,9 +71,9 @@ export function renderSignUp(root) {
     SaveUsers({
       fullName :actualFullName,
       email:actualEmail,
-      phone:actualPhone,
-      password:hashedPassword,
+      passwordHash: hashedPassword,
     });
+    navigateTo("/login");
   });
 
   root.appendChild(title);
@@ -86,8 +82,6 @@ export function renderSignUp(root) {
   root.appendChild(fullName);
   root.appendChild(document.createElement("br"));
   root.appendChild(email);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(phone);
   root.appendChild(document.createElement("br"));
   root.appendChild(password);
   root.appendChild(document.createElement("br"));

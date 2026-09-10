@@ -25,7 +25,7 @@ export function startRouter(root) {
 
   document.body.addEventListener("click", (e) => {
     if (e.target.matches("[data-link]")) {
-      e.preventDefault(); // منع المتصفح من dير reload
+      e.preventDefault(); 
       navigateTo(e.target.getAttribute("href"));
     }
   });
