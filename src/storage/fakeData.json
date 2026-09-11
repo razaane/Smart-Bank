@@ -1,6 +1,6 @@
 {
   "accounts": {
-    "USER_ID_1": {
+    "b95f0b38-7b5c-4de2-80ea-a56603d5abcd": {
       "solde": 15420.50,
       "comptes": [
         { "type": "Compte Courant", "numero": "**** 4521", "solde": 12300.00 },

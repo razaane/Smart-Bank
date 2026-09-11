@@ -1,7 +1,53 @@
-export function dashboard(root){
-    root.innerHTML="";
-    const title = document.createElement("h1");
-    title.textContent="welcome";
-    root.appendChild(title)
+import { getCurrentUser, clearSession } from "../../storage/sessionStorage.js";
+import { findUserById } from "../../storage/userStorage.js";
+import { navigateTo } from "../../router/router.js";
+import fakeData from "../../storage/fakeData.json";
 
+export function renderDashboard(root) {
+  root.innerHTML = "";
+
+  const userId = getCurrentUser();
+
+  if (!userId) {
+    navigateTo("/login");
+    return;
+  }
+
+  const user = findUserById(userId);
+  const accountData = fakeData.accounts[userId];
+
+  const welcome = document.createElement("h1");
+  welcome.textContent = `Bienvenue, ${user.fullName}`;
+
+  const soldeTitle = document.createElement("h3");
+  soldeTitle.textContent = accountData
+    ? `Solde total : ${accountData.solde} DH`
+    : "Aucune donnée financière disponible";
+
+  const comptesList = document.createElement("ul");
+  if (accountData) {
+    accountData.comptes.forEach((compte) => {
+      const li = document.createElement("li");
+      li.textContent = `${compte.type} (${compte.numero}) : ${compte.solde} DH`;
+      comptesList.appendChild(li);
+    });
+  }
+
+  const profileBtn = document.createElement("button");
+  profileBtn.textContent = "Modifier mon profil";
+  profileBtn.addEventListener("click", () => navigateTo("/profile"));
+
+  const logoutBtn = document.createElement("button");
+  logoutBtn.textContent = "Se déconnecter";
+  logoutBtn.addEventListener("click", () => {
+    clearSession();
+    navigateTo("/login");
+  });
+
+  root.appendChild(welcome);
+  root.appendChild(soldeTitle);
+  root.appendChild(comptesList);
+  root.appendChild(profileBtn);
+  root.appendChild(document.createElement("br"));
+  root.appendChild(logoutBtn);
 }
