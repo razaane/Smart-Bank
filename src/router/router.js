@@ -5,7 +5,7 @@ export function registerRoute(path, renderFn) {
 }
 
 function render(root) {
-  const path = window.location.pathname; // "/dashboard" بلا #
+  const path = window.location.pathname;
   const renderFn = routes[path] || routes["/404"];
 
   root.innerHTML = "";
@@ -16,7 +16,7 @@ function render(root) {
 }
 
 export function navigateTo(path) {
-  history.pushState({}, "", path); 
+  history.pushState({}, "", path);
   render(document.getElementById("root"));
 }
 
@@ -25,7 +25,7 @@ export function startRouter(root) {
 
   document.body.addEventListener("click", (e) => {
     if (e.target.matches("[data-link]")) {
-      e.preventDefault(); 
+      e.preventDefault();
       navigateTo(e.target.getAttribute("href"));
     }
   });

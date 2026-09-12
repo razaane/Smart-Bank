@@ -1,6 +1,7 @@
 import { getCurrentUser, clearSession } from "../../storage/sessionStorage.js";
 import { findUserById } from "../../storage/userStorage.js";
 import { navigateTo } from "../../router/router.js";
+import { renderSidebar } from "../sidebar.js";
 import fakeData from "../../storage/fakeData.json";
 
 export function renderDashboard(root) {
@@ -13,6 +14,8 @@ export function renderDashboard(root) {
     return;
   }
 
+   const sidebar = renderSidebar(); 
+  root.appendChild(sidebar);
   const user = findUserById(userId);
   const accountData = fakeData.accounts[userId];
 
