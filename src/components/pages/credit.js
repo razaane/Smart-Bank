@@ -1,9 +1,12 @@
 import { renderSidebar } from "../sidebar";
 import fakeData from "../../storage/fakeData.json";
+import { getCurrentUser } from "../../storage/sessionStorage";
+import { saveCredits } from "../../storage/userStorage";
 
 export function renderCredit(root){
     root.innerHTML="";
 
+    const currentUser = getCurrentUser();
     const sidebar = renderSidebar();
     root.appendChild(sidebar);
 
@@ -18,12 +21,12 @@ export function renderCredit(root){
     root.appendChild(infos);
 
     const montantInput = document.createElement("input");
-    montantInput.placeholder="Montant ${montantMin}-${montantMax}";
+    montantInput.placeholder=`Montant ${montantMin}-${montantMax}`;
     montantInput.type="number";
     root.appendChild(montantInput);
 
     const dureeInput = document.createElement("input");
-    dureeInput.placeholder="Duree ${dureeMinMois}-${dureeMaxMois}";
+    dureeInput.placeholder=`Duree ${dureeMinMois}-${dureeMaxMois}`;
     dureeInput.type="number";
     root.appendChild(dureeInput);
 
@@ -60,6 +63,15 @@ export function renderCredit(root){
             <p><strong>Coût total :</strong> ${coutTotal.toFixed(2)} DH</p>
             <p><strong>Coût du crédit (intérêts) :</strong> ${coutCredit.toFixed(2)} DH</p>
         `;
+        const data ={
+            Montant :montant,
+            Duree:duree,
+            Taux_Annuel :tauxAnnuel,
+            Mensualité :mensualite,
+            Cout_Total :coutTotal,
+            Cout_Credit:coutCredit,
+        }
+        saveCredits(currentUser,data);
     
     });
 

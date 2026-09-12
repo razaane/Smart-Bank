@@ -1,3 +1,4 @@
+
 const storedUsers = "users";
 
 export function getUsers(){
@@ -45,4 +46,20 @@ export function updateUser(id,data){
     localStorage.setItem("users",JSON.stringify(users));
     return true;
     
+}
+
+export function saveCredits(id,data){
+    const users = getUsers();
+
+    const user = users.find((user) => user.id === id);
+
+    if (!user) {
+        return false;
+    }
+    if (!user.credits) {
+        user.credits = [];
+    }
+    user.credits.push(data);
+    localStorage.setItem("users",JSON.stringify(users));
+    return true;
 }
