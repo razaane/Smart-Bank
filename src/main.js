@@ -3,7 +3,8 @@ import { renderLogin } from "./components/pages/login.js";
 import { registerRoute,startRouter } from "./router/router.js";
 import { renderProfile } from "./components/pages/profile.js";
 import { renderDashboard } from "./components/pages/dashboard.js";
-import { renderSidebar } from "./components/sidebar.js";
+import { renderOffers } from "./components/pages/offres.js";
+
 
 const root = document.getElementById("root");
 
@@ -12,6 +13,7 @@ registerRoute("/login",renderLogin);
 registerRoute("/", renderSignUp); 
 registerRoute("/profile",renderProfile);
 registerRoute("/dashboard",renderDashboard);
+registerRoute("/offres",renderOffers);
 
 
 startRouter(root);
