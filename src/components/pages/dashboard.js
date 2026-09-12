@@ -14,7 +14,7 @@ export function renderDashboard(root) {
     return;
   }
 
-   const sidebar = renderSidebar(); 
+  const sidebar = renderSidebar(); 
   root.appendChild(sidebar);
   const user = findUserById(userId);
   const accountData = fakeData.accounts[userId];
