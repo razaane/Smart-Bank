@@ -1,7 +1,7 @@
 import { renderSidebar } from "../sidebar";
 import fakeData from "../../storage/fakeData.json";
 import { getCurrentUser } from "../../storage/sessionStorage";
-import { saveCredits } from "../../storage/userStorage";
+//import { saveCredits } from "../../storage/userStorage";
 
 export function renderCredit(root){
     root.innerHTML="";
@@ -71,7 +71,7 @@ export function renderCredit(root){
             Cout_Total :coutTotal,
             Cout_Credit:coutCredit,
         }
-        saveCredits(currentUser,data);
+        //saveCredits(currentUser,data);
     
     });
 

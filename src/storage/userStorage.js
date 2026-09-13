@@ -30,20 +30,13 @@ export function findUserById(id){
 
 export function updateUser(id,data){
     const users = getUsers();
-    const user =users.find((u)=>u.id === id);
-    if(!user){
-        return false
+    const index =users.findIndex((u)=>u.id === id);
+    if (index === -1) {
+        return false;
     }
-    if(data.fullName){
-        user.fullName = data.fullName;
-    }
-    if(data.email){
-        user.email =data.email;
-    }
-    if(data.password){
-        user.password =data.password;
-    }
-    localStorage.setItem("users",JSON.stringify(users));
+
+    users[index] = { ...users[index], ...data };
+    localStorage.setItem("users", JSON.stringify(users));
     return true;
     
 }
