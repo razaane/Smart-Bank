@@ -8,14 +8,18 @@ export function renderDashboard(root) {
   root.innerHTML = "";
 
   const userId = getCurrentUser();
-
   if (!userId) {
     navigateTo("/login");
     return;
   }
 
-  const sidebar = renderSidebar(); 
+  const sidebar = renderSidebar();
   root.appendChild(sidebar);
+
+  const content = document.createElement("div");
+  content.className = "page-content";
+  root.appendChild(content);
+
   const user = findUserById(userId);
   const accountData = fakeData.accounts[userId];
 
@@ -36,6 +40,9 @@ export function renderDashboard(root) {
     });
   }
 
+  const actions = document.createElement("div");
+  actions.className = "dashboard-actions";
+
   const profileBtn = document.createElement("button");
   profileBtn.textContent = "Modifier mon profil";
   profileBtn.addEventListener("click", () => navigateTo("/profile"));
@@ -47,10 +54,11 @@ export function renderDashboard(root) {
     navigateTo("/login");
   });
 
-  root.appendChild(welcome);
-  root.appendChild(soldeTitle);
-  root.appendChild(comptesList);
-  root.appendChild(profileBtn);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(logoutBtn);
+  actions.appendChild(profileBtn);
+  actions.appendChild(logoutBtn);
+
+  content.appendChild(welcome);
+  content.appendChild(soldeTitle);
+  content.appendChild(comptesList);
+  content.appendChild(actions);
 }

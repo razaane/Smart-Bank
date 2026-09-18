@@ -12,7 +12,7 @@ export function renderSidebar(root){
     { label: "Simulation crédit", path: "/credit" },
     { label: "Récompenses", path: "/recompenses" },
     { label: "Offres flash", path: "/flash" },
-    { label: "Historique", path: "/historique" },
+    { label: "History", path: "/history" },
     { label: "Mon profil", path: "/profile" },
     ];
 

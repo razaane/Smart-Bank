@@ -2,68 +2,71 @@ import { renderSidebar } from "../sidebar";
 import fakeData from "../../storage/fakeData.json";
 
 function formatRemaining(ms) {
-    if (ms <= 0) 
-        return "Expirée";
-
-    const totalSeconds = Math.floor(ms / 1000);
-    const days = Math.floor(totalSeconds / (24 * 60 * 60));
-    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    return `${days}j ${hours}h ${minutes}m ${seconds}s`;
+  if (ms <= 0) return "Expirée";
+  const totalSeconds = Math.floor(ms / 1000);
+  const days = Math.floor(totalSeconds / (24 * 60 * 60));
+  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return `${days}j ${hours}h ${minutes}m ${seconds}s`;
 }
 
 export function renderOffresFlash(root) {
-    root.innerHTML = "";
+  root.innerHTML = "";
 
-    const sidebar = renderSidebar();
-    root.appendChild(sidebar);
+  const sidebar = renderSidebar();
+  root.appendChild(sidebar);
 
-    const title = document.createElement("h1");
-    title.textContent = "Offres Flash";
-    root.appendChild(title);
+  const content = document.createElement("div");
+  content.className = "page-content";
+  root.appendChild(content);
 
-    const list = document.createElement("div");
-    list.className = "flash-list";
+  const title = document.createElement("h1");
+  title.textContent = "Offres Flash";
+  content.appendChild(title);
 
-    const intervals =[];
+  const list = document.createElement("div");
+  list.className = "flash-list";
 
-        fakeData.flashOffers.forEach((offer) => {
-        const card = document.createElement("div");
-        card.className = "flash-card";
+  const intervals = [];
 
-        const cardTitle = document.createElement("h3");
-        cardTitle.textContent = offer.titre;
+  fakeData.flashOffers.forEach((offer) => {
+    const card = document.createElement("div");
+    card.className = "flash-card";
 
-        const cardDesc = document.createElement("p");
-        cardDesc.textContent = offer.description;
+    const cardTitle = document.createElement("h3");
+    cardTitle.textContent = offer.titre;
 
-        const countdown = document.createElement("p");
-        countdown.className = "countdown";
-        
+    const cardDesc = document.createElement("p");
+    cardDesc.textContent = offer.description;
 
-        const expireDate = new Date(offer.expireAt).getTime();
+    const countdown = document.createElement("p");
+    countdown.className = "countdown";
 
-        function updateCountdown() {
-        const remaining = expireDate - Date.now();
-        countdown.textContent = formatRemaining(remaining);
+    const expireDate = new Date(offer.expireAt).getTime();
 
-        if (remaining <= 0) {
-            card.classList.add("expired");
-            clearInterval(intervalId);
-        }
-        }
+    function updateCountdown() {
+      const remaining = expireDate - Date.now();
+      countdown.textContent = formatRemaining(remaining);
+      if (remaining <= 0) {
+        card.classList.add("expired");
+        clearInterval(intervalId);
+      }
+    }
 
-        updateCountdown();
-        const intervalId = setInterval(updateCountdown, 1000);
-        intervals.push(intervalId);
+    const intervalId = setInterval(updateCountdown, 1000);
+    intervals.push(intervalId);
+    updateCountdown();
 
-        card.appendChild(cardTitle);
-        card.appendChild(cardDesc);
-        card.appendChild(countdown);
-        list.appendChild(card);
-        });
-    
-    root.appendChild(list);
+    card.appendChild(cardTitle);
+    card.appendChild(cardDesc);
+    card.appendChild(countdown);
+    list.appendChild(card);
+  });
+
+  content.appendChild(list);
+
+  return function cleanup() {
+    intervals.forEach((id) => clearInterval(id));
+  };
 }

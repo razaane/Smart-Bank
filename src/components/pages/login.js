@@ -2,9 +2,13 @@ import { hashPassword } from "../../security/hash.js";
 import { findByEmail } from "../../storage/userStorage.js";
 import { navigateTo } from "../../router/router.js";
 import { setCurrentUser } from "../../storage/sessionStorage.js";
+import { addHistoryEntry } from "../../storage/historyStorage.js";
 
 export function renderLogin(root) {
   root.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.className = "auth-page";
 
   const title = document.createElement("h1");
   title.textContent = "Se connecter";
@@ -19,14 +23,20 @@ export function renderLogin(root) {
   password.placeholder = "Entrer votre mot de passe";
   password.id = "login-password";
 
-  const submitBtn = document.createElement("button");
-  submitBtn.textContent = "Se connecter";
-
   const errorMsg = document.createElement("p");
   errorMsg.style.color = "red";
 
+  const submitBtn = document.createElement("button");
+  submitBtn.textContent = "Se connecter";
+
+  const signuplink = document.createElement("p");
+  signuplink.innerHTML = `Vous n'avez pas un compte ? <span style="color:#2f7bff; cursor:pointer; text-decoration:underline;">S'authentifier</span>`;
+  signuplink.addEventListener("click", () => {
+    navigateTo("/signup");
+  });
+
   submitBtn.addEventListener("click", async () => {
-    const actualEmail = email.value;
+    const actualEmail = email.value.trim();
     const actualPassword = password.value;
 
     const user = findByEmail(actualEmail);
@@ -45,17 +55,16 @@ export function renderLogin(root) {
 
     errorMsg.textContent = "";
     setCurrentUser(user.id);
-    console.log("Connexion réussie !", user);
+    addHistoryEntry(user.id, { action: "Connexion réussie" });
     navigateTo("/dashboard");
   });
 
-  root.appendChild(title);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(document.createElement("br"));
-  root.appendChild(email);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(password);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(submitBtn);
-  root.appendChild(errorMsg);
+  container.appendChild(title);
+  container.appendChild(email);
+  container.appendChild(password);
+  container.appendChild(errorMsg);
+  container.appendChild(submitBtn);
+  container.appendChild(signuplink);
+
+  root.appendChild(container);
 }

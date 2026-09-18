@@ -1,10 +1,13 @@
 import { hashPassword } from "../../security/hash.js";
 import { fullNameRegex, emailRegex, passwordRegex } from "../../utils/validators.js";
-import { SaveUsers ,findByEmail } from "../../storage/userStorage.js";
+import { SaveUsers, findByEmail } from "../../storage/userStorage.js";
 import { navigateTo } from "../../router/router.js";
 
 export function renderSignUp(root) {
   root.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.className = "auth-page";
 
   const title = document.createElement("h1");
   title.textContent = "Créer un compte";
@@ -19,7 +22,6 @@ export function renderSignUp(root) {
   email.placeholder = "Entrer votre adresse email";
   email.id = "email";
 
-
   const password = document.createElement("input");
   password.type = "password";
   password.placeholder = "Entrer un mot de passe";
@@ -30,8 +32,17 @@ export function renderSignUp(root) {
   passwordVer.placeholder = "Confirmer votre mot de passe";
   passwordVer.id = "passwordVer";
 
+  const errorMsg = document.createElement("p");
+  errorMsg.style.color = "red";
+
   const submitBtn = document.createElement("button");
   submitBtn.textContent = "S'inscrire";
+
+  const loginLink = document.createElement("p");
+  loginLink.innerHTML = `Vous avez déjà un compte ? <span style="color:#2f7bff; cursor:pointer; text-decoration:underline;">Se connecter</span>`;
+  loginLink.addEventListener("click", () => {
+    navigateTo("/login");
+  });
 
   submitBtn.addEventListener("click", async () => {
     const actualFullName = fullName.value;
@@ -40,53 +51,50 @@ export function renderSignUp(root) {
     const actualPassVer = passwordVer.value;
 
     if (!fullNameRegex.test(actualFullName)) {
-      console.log("Nom invalide");
+      errorMsg.textContent = "Nom invalide";
       return;
     }
 
     if (!emailRegex.test(actualEmail)) {
-      console.log("Email invalide");
+      errorMsg.textContent = "Email invalide";
       return;
     }
 
-
     if (!passwordRegex.test(actualPassword)) {
-      console.log("Mot de passe invalide");
+      errorMsg.textContent = "Mot de passe invalide";
       return;
     }
 
     if (actualPassword !== actualPassVer) {
-      console.log("Les mots de passe ne correspondent pas");
+      errorMsg.textContent = "Les mots de passe ne correspondent pas";
       return;
     }
 
-    if(findByEmail(actualEmail)){
-      console.log("Cette email deja utilisé");
+    if (findByEmail(actualEmail)) {
+      errorMsg.textContent = "Cette email est déjà utilisée";
       return;
     }
+
+    errorMsg.textContent = "";
     const hashedPassword = await hashPassword(actualPassword);
-    console.log("Toutes les données sont valides !");
-    console.log("Password haché:", hashedPassword);
 
     SaveUsers({
       id: crypto.randomUUID(),
-      fullName :actualFullName,
-      email:actualEmail,
+      fullName: actualFullName,
+      email: actualEmail,
       passwordHash: hashedPassword,
     });
     navigateTo("/login");
   });
 
-  root.appendChild(title);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(document.createElement("br"));
-  root.appendChild(fullName);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(email);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(password);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(passwordVer);
-  root.appendChild(document.createElement("br"));
-  root.appendChild(submitBtn);
+  container.appendChild(title);
+  container.appendChild(fullName);
+  container.appendChild(email);
+  container.appendChild(password);
+  container.appendChild(passwordVer);
+  container.appendChild(errorMsg);
+  container.appendChild(submitBtn);
+  container.appendChild(loginLink);
+
+  root.appendChild(container);
 }

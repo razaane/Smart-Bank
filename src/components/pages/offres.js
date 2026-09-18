@@ -1,38 +1,42 @@
 import { renderSidebar } from "../sidebar";
 import fakeData from "../../storage/fakeData.json";
 
-export function renderOffers(root){
-    root.innerHTML ="";
+export function renderOffers(root) {
+  root.innerHTML = "";
 
-    const sidebar =renderSidebar();
-    root.appendChild(sidebar);
+  const sidebar = renderSidebar();
+  root.appendChild(sidebar);
 
-    const title = document.createElement("h1");
-    title.textContent="Offres financières";
-    root.appendChild(title);
+  const content = document.createElement("div");
+  content.className = "page-content";
+  root.appendChild(content);
 
-    const list =document.createElement("div")
-    list.className ="offre-list"
+  const title = document.createElement("h1");
+  title.textContent = "Offres financières";
+  content.appendChild(title);
 
-    fakeData.offres.forEach((offre)=>{
-        const card = document.createElement("div");
-        card.className="offre-card";
+  const list = document.createElement("div");
+  list.className = "offre-list";
 
-        const cardTitle = document.createElement("h3")
-        cardTitle.textContent=offre.titre;
+  fakeData.offres.forEach((offre) => {
+    const card = document.createElement("div");
+    card.className = "offre-card";
 
-        const cardDesc =document.createElement("p");
-        cardDesc.textContent=offre.description;
+    const cardTitle = document.createElement("h3");
+    cardTitle.textContent = offre.titre;
 
-        const cardCategory =document.createElement("span");
-        cardCategory.className="badge";
-        cardCategory.textContent =offre.categorie;
+    const cardDesc = document.createElement("p");
+    cardDesc.textContent = offre.description;
 
-        card.appendChild(cardTitle);
-        card.appendChild(cardDesc);
-        card.appendChild(cardCategory);
-        list.appendChild(card);
-    })
-    root.appendChild(list);
+    const cardCategory = document.createElement("span");
+    cardCategory.className = "badge";
+    cardCategory.textContent = offre.categorie;
 
+    card.appendChild(cardTitle);
+    card.appendChild(cardDesc);
+    card.appendChild(cardCategory);
+    list.appendChild(card);
+  });
+
+  content.appendChild(list);
 }
